@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>FINAL EXAM PWS</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    
+        <script>
+            function get(){
+                let view = document.getElementById("view");
+                //view.innerHTML = "Helllooo";
+                $.ajax({
+                    url:'http://localhost:8080/api/mailall',
+                    dataType:'text',
+                    success:function(result){
+                        view.innerHTML = result;
+                    }
+                });
+            }
+
+
+            function post(){
+                let view = document.getElementById("view");
+                let id_surat = document.getElementById("id_surat").value;
+                let nomor_surat = document.getElementById("nomor_surat").value;
+                let judul_surat = document.getElementById("judul_surat").value;
+                let tembusan = document.getElementById("tembusan").value;
+                let timestamp = document.getElementById("timestamp").value;
+                let json = {"id_surat" : id_surat, "nomor_surat" : nomor_surat, "judul_surat" : judul_surat, "tembusan":tembusan, "timestamp":timestamp};
+                let obj = JSON.stringify(json);
+                $.ajax({
+                    url:'http://localhost:8080/api/mail',
+                    data:obj,        
+                    method:'save',  
+                    contentType:'application/json',
+                    dataType:'text',
+                    success: function(result){
+                        view.innerHTML = result;
+                    }
+                });
+            }
+            
+
+        
+            function put(){
+                let view = document.getElementById("view");
+                let id_surat = document.getElementById("id_surat").value;
+                let nomor_surat = document.getElementById("nomor_surat").value;
+                let judul_surat = document.getElementById("judul_surat").value;
+                let tembusan = document.getElementById("tembusan").value;
+                let timestamp = document.getElementById("timestamp").value;
+                let json = {"id_surat" : id_surat, "nomor_surat" : nomor_surat, "judul_surat" : judul_surat, "tembusan":tembusan, "timestamp":timestamp};
+                let obj = JSON.stringify(json);
+                $.ajax({
+                    url:'http://localhost:8080/api/mail',
+                    data:obj,        
+                    method:'update',  
+                    contentType:'application/json',
+                    dataType:'text',
+                    success: function(result){
+                        view.innerHTML = result;
+                    }
+                });
+            }
+            
+                        
+                function del(){
+                    let view = document.getElementById("view");
+                let id_surat = document.getElementById("id_surat").value;
+                let nomor_surat = document.getElementById("nomor_surat").value;
+                let judul_surat = document.getElementById("judul_surat").value;
+                let tembusan = document.getElementById("tembusan").value;
+                let timestamp = document.getElementById("timestamp").value;
+                let json = {"id_surat" : id_surat};
+                let obj = JSON.stringify(json);
+                $.ajax({
+                    url:'http://localhost:8080/api/mail/{id_surat}',
+                    data:obj,        
+                    method:'delete',  
+                    contentType:'application/json',
+                    dataType:'text',
+                    success: function(result){
+                        view.innerHTML = result;
+                    }
+                });
+            }
+            
+        </script>
+    </head>
+    <body>
+        <hr>
+        <h2><center><div>UAS PWS A</div></center></h2>
+        <hr>
+        <p>ID surat :</p> <input type="text" id="id_surat" name="id_surat"> <br>
+        <p>Nomor surat : </p> <input type="text" id="nomor_surat" name="nomor_surat"><br>
+        <p>Judul Surat : </p> <input type="text" id="judul_surat" name="judul_surat"><br>
+        <p>Tembusan : </p> <input type="text" id="tembusan" name="tembusan"><br>
+        <p>File </p> <input type="file" name="file" accept="pdf" required>
+
+        
+        <hr><!-- comment -->
+        <button onclick="get()">GET</button>
+        <button onclick="post()">POST</button>
+        <button onclick="put()">PUT</button>
+        <button onclick="del()">DELETE</button> <hr>
+        <br><!-- comment -->
+        <div id="view">
+    </body>
+</html>
